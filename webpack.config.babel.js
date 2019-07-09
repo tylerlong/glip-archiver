@@ -1,5 +1,10 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
-import { HotModuleReplacementPlugin } from 'webpack'
+import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack'
+import dotenv from 'dotenv-override-true'
+import path from 'path'
+
+// dotenv.config({ path: path.join(__dirname, '.env') })
+// console.log(dotenv.parsed)
 
 const mainConfig = {
   target: 'web',
@@ -35,7 +40,10 @@ const mainConfig = {
     new HtmlWebpackPlugin({
       template: './index.html'
     }),
-    new HotModuleReplacementPlugin()
+    new HotModuleReplacementPlugin(),
+    new DefinePlugin({
+      'process.env': JSON.stringify(dotenv.config({ path: path.join(__dirname, '.env') }).parsed)
+    })
   ]
 }
 
