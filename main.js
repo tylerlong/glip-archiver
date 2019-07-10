@@ -17,17 +17,12 @@ const store = SubX.create({
   ...Cookies.getJSON('glip-archiver'),
   async archive (groupId, days) {
     console.log(groupId, days)
-    // const date = new Date()
-    // date.setDate(date.getDate() - 7)
-    // const r = await rc.post('/restapi/v1.0/glip/data-export', { dateFrom: date.toISOString() })
-    // if (!this.tasks) {
-    //   this.tasks = []
-    // }
-    // this.tasks.push({
-    //   id: r.id
-    // })
+    store.archiving = true
+    await delay(1000)
+    store.archiving = false
   }
 })
+store.$.subscribe(console.log)
 const fetchGroups = async () => {
   const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250, type: 'Team' } })
   store.groups = r.data.records
@@ -44,7 +39,7 @@ rc.on('tokenChanged', newToken => {
   }
 })
 SubX.autoRun(store, () => {
-  Cookies.set('glip-archiver', store.toJSON(), { expires: 3650 })
+  Cookies.set('glip-archiver', { token: store.token }, { expires: 3650 })
 })
 
 // 3-legged oauth
@@ -79,7 +74,7 @@ class Hello extends Component {
           <option key='365' value='365'>Last 365 days</option>
         </select>
         <br /> <br />
-        {(store.groups || []).length > 0 ? <button onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</button> : ''}
+        {(!store.archiving && (store.groups || []).length > 0) ? <button onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</button> : ''}
       </>
     }
     return <>
