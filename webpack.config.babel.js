@@ -2,6 +2,7 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack'
 import dotenv from 'dotenv-override-true'
 import path from 'path'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const mainConfig = {
   target: 'web',
@@ -16,11 +17,18 @@ const mainConfig = {
   module: {
     rules: [
       {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: 'css-loader'
+        })
+      },
+      {
         test: /\.js$/,
         use: {
           loader: 'babel-loader',
           options: {
-            'presets': [
+            presets: [
               [
                 '@babel/preset-env',
                 {
@@ -30,6 +38,9 @@ const mainConfig = {
                 }
               ],
               '@babel/preset-react'
+            ],
+            plugins: [
+              ['import', { 'libraryName': 'antd', 'libraryDirectory': 'es', 'style': 'css' }] // `style: true` for less
             ]
           }
         }
@@ -43,7 +54,8 @@ const mainConfig = {
     new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': JSON.stringify(dotenv.config().parsed)
-    })
+    }),
+    new ExtractTextPlugin('[name].css')
   ]
 }
 

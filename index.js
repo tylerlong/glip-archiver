@@ -5,6 +5,7 @@ import SubX from 'subx'
 import Cookies from 'js-cookie'
 import RingCentral from 'ringcentral-js-concise'
 import delay from 'timeout-as-promise'
+import { Button } from 'antd'
 
 import { fetchPosts, download } from './util'
 
@@ -80,7 +81,7 @@ class Hello extends Component {
           <option key='365' value='365'>Last 365 days</option>
         </select>
         <br /> <br />
-        {(!store.archiving && (store.groups || []).length > 0) ? <button onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</button> : ''}
+        {(!store.archiving && (store.groups || []).length > 0) ? <Button onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</Button> : ''}
       </>
     }
     return <>
