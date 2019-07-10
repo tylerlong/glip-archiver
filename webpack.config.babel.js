@@ -1,12 +1,16 @@
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack'
 import dotenv from 'dotenv-override-true'
+import path from 'path'
 
 const mainConfig = {
   target: 'web',
   mode: 'development',
   entry: {
-    index: './main.js'
+    index: './index.js'
+  },
+  output: {
+    path: path.join(process.cwd(), 'docs')
   },
   devtool: 'source-map',
   module: {
