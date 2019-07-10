@@ -2,7 +2,6 @@ import HtmlWebpackPlugin from 'html-webpack-plugin'
 import { HotModuleReplacementPlugin, DefinePlugin } from 'webpack'
 import dotenv from 'dotenv-override-true'
 import path from 'path'
-import ExtractTextPlugin from 'extract-text-webpack-plugin'
 
 const mainConfig = {
   target: 'web',
@@ -18,10 +17,7 @@ const mainConfig = {
     rules: [
       {
         test: /\.css$/,
-        use: ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: 'css-loader'
-        })
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }]
       },
       {
         test: /\.js$/,
@@ -54,8 +50,7 @@ const mainConfig = {
     new HotModuleReplacementPlugin(),
     new DefinePlugin({
       'process.env': JSON.stringify(dotenv.config().parsed)
-    }),
-    new ExtractTextPlugin('[name].css')
+    })
   ]
 }
 
