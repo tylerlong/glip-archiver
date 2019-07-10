@@ -27,11 +27,20 @@ const store = SubX.create({
     })
   }
 })
+const fetchGroups = async () => {
+  const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250, type: 'Team' } })
+  store.groups = r.data.records
+}
 if (store.token) {
   rc.token(store.token)
+  fetchGroups()
 }
 rc.on('tokenChanged', newToken => {
   store.token = newToken
+  store.groups = []
+  if (newToken) {
+    fetchGroups()
+  }
 })
 SubX.autoRun(store, () => {
   Cookies.set('glip-archiver', store.toJSON(), { expires: 3650 })
@@ -60,7 +69,16 @@ class Hello extends Component {
         <h3>Existing Archives</h3>
         <ul>{(store.tasks || []).map(task => <li>{task.id}</li>)}</ul>
         <h3>New Archive</h3>
-        <button onClick={e => store.newTask()}>Click here to archive</button>
+        <select>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
+        <br /><br />
+        <select>
+          <option key='7'>last 7 days</option>
+          <option key='30'>last 30 days</option>
+          <option key='90'>Last 90 days</option>
+          <option key='365'>Last 365 days</option>
+        </select>
+        <br /> <br />
+        {(store.groups || []).length > 0 ? <button onClick={e => store.newTask()}>Click here to archive</button> : ''}
       </>
     }
     return <>
