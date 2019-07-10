@@ -15,16 +15,17 @@ const rc = new RingCentral(
 )
 const store = SubX.create({
   ...Cookies.getJSON('glip-archiver'),
-  async newTask () {
-    const date = new Date()
-    date.setDate(date.getDate() - 7)
-    const r = await rc.post('/restapi/v1.0/glip/data-export', { dateFrom: date.toISOString() })
-    if (!this.tasks) {
-      this.tasks = []
-    }
-    this.tasks.push({
-      id: r.id
-    })
+  async archive (groupId, days) {
+    console.log(groupId, days)
+    // const date = new Date()
+    // date.setDate(date.getDate() - 7)
+    // const r = await rc.post('/restapi/v1.0/glip/data-export', { dateFrom: date.toISOString() })
+    // if (!this.tasks) {
+    //   this.tasks = []
+    // }
+    // this.tasks.push({
+    //   id: r.id
+    // })
   }
 })
 const fetchGroups = async () => {
@@ -66,19 +67,19 @@ class Hello extends Component {
     } else {
       body = <>
         <h2>Archive your Glip data</h2>
-        <h3>Existing Archives</h3>
-        <ul>{(store.tasks || []).map(task => <li>{task.id}</li>)}</ul>
+        {/* <h3>Existing Archives</h3>
+        <ul>{(store.tasks || []).map(task => <li>{task.id}</li>)}</ul> */}
         <h3>New Archive</h3>
-        <select>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
+        <select id='group-select'>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
         <br /><br />
-        <select>
-          <option key='7'>last 7 days</option>
-          <option key='30'>last 30 days</option>
-          <option key='90'>Last 90 days</option>
-          <option key='365'>Last 365 days</option>
+        <select id='days-select'>
+          <option key='7' value='7'>last 7 days</option>
+          <option key='30' value='30'>last 30 days</option>
+          <option key='90' value='90'>Last 90 days</option>
+          <option key='365' value='365'>Last 365 days</option>
         </select>
         <br /> <br />
-        {(store.groups || []).length > 0 ? <button onClick={e => store.newTask()}>Click here to archive</button> : ''}
+        {(store.groups || []).length > 0 ? <button onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</button> : ''}
       </>
     }
     return <>
