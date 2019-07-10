@@ -63,7 +63,7 @@
 /******/
 /******/ 	var hotApplyOnUpdate = true;
 /******/ 	// eslint-disable-next-line no-unused-vars
-/******/ 	var hotCurrentHash = "605249b32625e6b4a0cc";
+/******/ 	var hotCurrentHash = "750ff1fa0d308ed8f49a";
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule;
@@ -825,8 +825,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-const redirectUri = 'http://localhost:8080';
-const rc = new ringcentral_js_concise__WEBPACK_IMPORTED_MODULE_5__["default"]({"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!"}.RINGCENTRAL_CLIENT_ID, {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!"}.RINGCENTRAL_CLIENT_SECRET, {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!"}.RINGCENTRAL_SERVER_URL);
+const redirectUri = {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!","RINGCENTRAL_REDIRECT_URI":"https://tylerlong.github.io/glip-archiver/"}.RINGCENTRAL_REDIRECT_URI;
+const rc = new ringcentral_js_concise__WEBPACK_IMPORTED_MODULE_5__["default"]({"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!","RINGCENTRAL_REDIRECT_URI":"https://tylerlong.github.io/glip-archiver/"}.RINGCENTRAL_CLIENT_ID, {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!","RINGCENTRAL_REDIRECT_URI":"https://tylerlong.github.io/glip-archiver/"}.RINGCENTRAL_CLIENT_SECRET, {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!","RINGCENTRAL_REDIRECT_URI":"https://tylerlong.github.io/glip-archiver/"}.RINGCENTRAL_SERVER_URL);
 const store = subx__WEBPACK_IMPORTED_MODULE_3__["default"].create({ ...js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.getJSON('glip-archiver'),
 
   async archive(groupId, days) {
@@ -48138,7 +48138,7 @@ var debugs = {};
 var debugEnviron;
 
 exports.debuglog = function (set) {
-  if (isUndefined(debugEnviron)) debugEnviron = {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!"}.NODE_DEBUG || '';
+  if (isUndefined(debugEnviron)) debugEnviron = {"RINGCENTRAL_SERVER_URL":"https://platform.ringcentral.com","RINGCENTRAL_CLIENT_ID":"7K-VX-tDQTOa0CQbpjSslg","RINGCENTRAL_CLIENT_SECRET":"7PJylFtnTEuhHHDd6_zpPAjzmacyvyRlimZG0TeZlJ2g","RINGCENTRAL_USERNAME":"16504223279","RINGCENTRAL_EXTENSION":"","RINGCENTRAL_PASSWORD":"Ring123!","RINGCENTRAL_REDIRECT_URI":"https://tylerlong.github.io/glip-archiver/"}.NODE_DEBUG || '';
   set = set.toUpperCase();
 
   if (!debugs[set]) {

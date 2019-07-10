@@ -8,7 +8,7 @@ import delay from 'timeout-as-promise'
 
 import { fetchPosts, download } from './util'
 
-const redirectUri = 'http://localhost:8080'
+const redirectUri = process.env.RINGCENTRAL_REDIRECT_URI
 
 const rc = new RingCentral(
   process.env.RINGCENTRAL_CLIENT_ID,
