@@ -1,7 +1,7 @@
 {
   "license": "MIT",
   "scripts": {
-    "export-text": "node -r @babel/register -r dotenv-override-true/config glip-data-export.js",
+    "export-test": "node -r @babel/register -r dotenv-override-true/config test/glip-data-export.js",
     "build": "webpack --progress --colors",
     "server": "webpack-dev-server --progress --colors"
   },

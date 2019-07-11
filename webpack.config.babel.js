@@ -7,7 +7,7 @@ const mainConfig = {
   target: 'web',
   mode: 'development',
   entry: {
-    index: './index.js'
+    index: './src/index.js'
   },
   output: {
     path: path.join(process.cwd(), 'docs')
@@ -45,7 +45,7 @@ const mainConfig = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './index.html'
+      template: './src/index.html'
     }),
     new HotModuleReplacementPlugin(),
     new DefinePlugin({
