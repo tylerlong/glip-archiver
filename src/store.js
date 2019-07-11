@@ -1,8 +1,8 @@
-import { fetchPosts, download } from './util'
 import Cookies from 'js-cookie'
 import SubX from 'subx'
 
-import rc from './ringcentral'
+import rc, { fetchGroup } from './ringcentral'
+import { fetchPosts, download } from './util'
 
 const store = SubX.create({
   ...Cookies.getJSON('glip-archiver'),
@@ -10,10 +10,11 @@ const store = SubX.create({
     console.log(groupId, days)
     store.archiving = true
 
+    const group = await fetchGroup(groupId)
+    console.log(group)
     const records = await fetchPosts(rc, groupId, days)
     console.log(records)
-    download(`glip-archive-${groupId}.json`, JSON.stringify(records))
-
+    download(`glip-archive-${groupId}-${(new Date()).getTime()}.json`, JSON.stringify({ timestamp: (new Date()).getTime(), group, posts: records }))
     store.archiving = false
   }
 })

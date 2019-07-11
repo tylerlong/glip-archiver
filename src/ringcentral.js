@@ -20,4 +20,9 @@ if (code) {
   })()
 }
 
+export const fetchGroup = async groupId => {
+  const r = await rc.get(`/restapi/v1.0/glip/groups/${groupId}`)
+  return r.data
+}
+
 export default rc
