@@ -10,7 +10,8 @@ const mainConfig = {
     index: './src/index.js'
   },
   output: {
-    path: path.join(process.cwd(), 'docs')
+    path: path.join(process.cwd(), 'docs'),
+    filename: '[name].[hash].js'
   },
   devtool: 'source-map',
   module: {
