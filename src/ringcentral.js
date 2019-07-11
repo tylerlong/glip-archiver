@@ -25,4 +25,9 @@ export const fetchGroup = async groupId => {
   return r.data
 }
 
+export const fetchPersons = async personIds => {
+  const persons = await rc.batchGet('/restapi/v1.0/glip/persons', personIds, 30)
+  return persons
+}
+
 export default rc
