@@ -2,23 +2,12 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Component } from 'react-subx'
 
-import delay from 'timeout-as-promise'
 import { Button } from 'antd'
 
-import store, { rc } from './store'
+import store from './store'
+import rc from './ringcentral'
 
 const redirectUri = process.env.RINGCENTRAL_REDIRECT_URI
-
-// 3-legged oauth
-const urlParams = new URLSearchParams(window.location.search)
-const code = urlParams.get('code')
-if (code) {
-  (async () => {
-    await rc.authorize({ code, redirectUri })
-    await delay(100)
-    window.location.href = redirectUri
-  })()
-}
 
 class Hello extends Component {
   render () {

@@ -1,13 +1,8 @@
 import { fetchPosts, download } from './util'
 import Cookies from 'js-cookie'
 import SubX from 'subx'
-import RingCentral from 'ringcentral-js-concise'
 
-export const rc = new RingCentral(
-  process.env.RINGCENTRAL_CLIENT_ID,
-  process.env.RINGCENTRAL_CLIENT_SECRET,
-  process.env.RINGCENTRAL_SERVER_URL
-)
+import rc from './ringcentral'
 
 const store = SubX.create({
   ...Cookies.getJSON('glip-archiver'),
