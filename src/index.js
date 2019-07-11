@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Component } from 'react-subx'
-import { Button } from 'antd'
+import { Button, Spin } from 'antd'
 
 import store from './store'
 import rc from './ringcentral'
@@ -27,6 +27,7 @@ class Hello extends Component {
         </select>
         <br /> <br />
         {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</Button> : ''}
+        {store.archiving ? <Spin size='large' /> : ''}
       </>
     }
     return <>
