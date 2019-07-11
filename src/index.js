@@ -69,9 +69,6 @@ class Hello extends Component {
     } else {
       body = <>
         <h2>Archive your Glip data</h2>
-        {/* <h3>Existing Archives</h3>
-        <ul>{(store.tasks || []).map(task => <li>{task.id}</li>)}</ul> */}
-        <h3>New Archive</h3>
         <select id='group-select'>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
         <br /><br />
         <select id='days-select'>
@@ -81,7 +78,7 @@ class Hello extends Component {
           <option key='365' value='365'>Last 365 days</option>
         </select>
         <br /> <br />
-        {(!store.archiving && (store.groups || []).length > 0) ? <Button onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</Button> : ''}
+        {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</Button> : ''}
       </>
     }
     return <>
