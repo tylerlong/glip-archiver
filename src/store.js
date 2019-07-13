@@ -17,7 +17,7 @@ const store = SubX.create({
     const posts = await fetchPosts(rc, groupId, days)
     console.log(posts)
     const content = { timestamp: (new Date()).getTime(), group, persons, posts }
-    content.hash = generateHash(JSON.stringify(content))
+    content.hash = generateHash(JSON.stringify(content) + process.env.HASH_SALT)
     download(`glip-archive-${groupId}-${(new Date()).getTime()}.json`, JSON.stringify(content))
     store.archiving = false
   }
