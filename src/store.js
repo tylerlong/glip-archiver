@@ -6,23 +6,24 @@ import { fetchPosts, download, generateHash } from './util'
 
 const store = SubX.create({
   ...Cookies.getJSON('glip-archiver'),
-  async archive (groupId, days) {
-    console.log(groupId, days)
+  async archive (groupId) {
+    console.log(groupId)
     store.archiving = true
 
     const group = await fetchGroup(groupId)
     console.log(group)
     const persons = await fetchPersons(group.members)
     console.log(persons)
-    const posts = await fetchPosts(rc, groupId, days)
+    const posts = await fetchPosts(rc, groupId)
     console.log(posts)
-    const content = { timestamp: (new Date()).getTime(), group, persons, posts }
+    const timestamp = (new Date()).getTime()
+    const content = { timestamp, group, persons, posts }
     content.hash = generateHash(JSON.stringify(content) + process.env.HASH_SALT)
-    download(`glip-archive-${groupId}-${(new Date()).getTime()}.json`, JSON.stringify(content))
+    download(`glip-archive-${groupId}-${timestamp}.json`, JSON.stringify(content))
     store.archiving = false
   }
 })
-store.$.subscribe(console.log)
+// store.$.subscribe(console.log)
 
 const fetchGroups = async () => {
   const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250, type: 'Team' } })

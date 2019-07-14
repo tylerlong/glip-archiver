@@ -1,6 +1,12 @@
-export const fetchPosts = async (rc, groupId, days) => {
-  const r = await rc.get(`/restapi/v1.0/glip/chats/${groupId}/posts`, { params: { recordCount: 250 } })
-  return r.data.records
+export const fetchPosts = async (rc, groupId, pageToken = undefined) => {
+  const r = await rc.get(`/restapi/v1.0/glip/chats/${groupId}/posts`, { params: { recordCount: 250, pageToken } })
+  const records = r.data.records
+  console.log(r.data)
+  if (r.data.navigation && r.data.navigation.prevPageToken) {
+    return [...records, ...(await fetchPosts(rc, groupId, r.data.navigation.prevPageToken))]
+  } else {
+    return records
+  }
 }
 
 export const download = (filename, text) => {

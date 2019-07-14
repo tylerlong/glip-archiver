@@ -18,15 +18,8 @@ class Hello extends Component {
       body = <>
         <h2>Archive your Glip data</h2>
         <select id='group-select'>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
-        <br /><br />
-        <select id='days-select'>
-          <option key='7' value='7'>last 7 days</option>
-          <option key='30' value='30'>last 30 days</option>
-          <option key='90' value='90'>Last 90 days</option>
-          <option key='365' value='365'>Last 365 days</option>
-        </select>
         <br /> <br />
-        {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('days-select').value))}>Click here to archive</Button> : ''}
+        {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value)}>Click here to archive</Button> : ''}
         {store.archiving ? <Spin size='large' /> : ''}
       </>
     }
