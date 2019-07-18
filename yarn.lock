@@ -6458,10 +6458,10 @@ style-loader@^0.23.1:
     loader-utils "^1.1.0"
     schema-utils "^1.0.0"
 
-subx@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.yarnpkg.com/subx/-/subx-0.7.4.tgz#b6879ab9422d88ba91498be0dfcc4c2a53c28ce8"
-  integrity sha512-Hs9+UfbNqBa0hyJVCA8RXS+hVU5pewYwrdH3t1dKCgWYGKlwh7tgp/oGYApUzVovXNyl0d0zfydiHk9EAAMS9w==
+subx@^0.7.5:
+  version "0.7.5"
+  resolved "https://registry.yarnpkg.com/subx/-/subx-0.7.5.tgz#9cd59f0b3634f825f6bb269f4c6a93653e55d17f"
+  integrity sha512-55ojkxzphrjuUCDomBMz78iRVcxpTm1bEGj5jJA4vB/oJmNfDxfkLXs0ZJx1afrWaUlwuAEYgUxTnTH79RvsQQ==
   dependencies:
     ramda "^0.26.1"
     rxjs "^6.5.2"
