@@ -16,6 +16,8 @@ class Hello extends Component {
       archiveBody = <a href={rc.authorizeUri(redirectUri)}>Authorize me to access your Glip data</a>
     } else {
       archiveBody = <>
+        <Button size='small' onClick={e => store.logout()}>Log out</Button>
+        <br /><br />
         <select id='group-select'>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
         <br /> <br />
         {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value)}>Click here to archive</Button> : ''}
