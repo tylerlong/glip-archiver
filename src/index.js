@@ -9,6 +9,17 @@ import rc from './ringcentral'
 const redirectUri = process.env.RINGCENTRAL_REDIRECT_URI
 
 class Hello extends Component {
+  handleFiles () {
+    const element = document.getElementById('the-file')
+    const file = element.files[0]
+    const fileReader = new window.FileReader()
+    fileReader.onload = event => {
+      const text = event.target.result
+      console.log(text)
+    }
+    fileReader.readAsText(file)
+  }
+
   render () {
     const store = this.props.store
     let archiveBody
@@ -29,6 +40,7 @@ class Hello extends Component {
       <h2>Archive your Glip data</h2>
       {archiveBody}
       <h2>Read archived data</h2>
+      <input type='file' id='the-file' onChange={e => { this.handleFiles() }} />
     </>
   }
 }
