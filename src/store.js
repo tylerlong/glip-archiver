@@ -1,14 +1,14 @@
-import Cookies from 'js-cookie'
 import SubX from 'subx'
+import delay from 'timeout-as-promise'
 
 import rc, { fetchGroup, fetchPersons } from './ringcentral'
 import { fetchPosts, download, generateHash } from './util'
 
 const store = SubX.create({
-  ...Cookies.getJSON('glip-archiver'),
+  ...JSON.parse(window.localStorage.getItem('glip-archiver')),
   async archive (groupId) {
     console.log(groupId)
-    store.archiving = true
+    this.archiving = true
 
     const group = await fetchGroup(groupId)
     console.log(group)
@@ -20,14 +20,27 @@ const store = SubX.create({
     const content = { timestamp, group, persons, posts }
     content.hash = generateHash(JSON.stringify(content) + process.env.HASH_SALT)
     download(`glip-archive-${groupId}-${timestamp}.json`, JSON.stringify(content))
-    store.archiving = false
+    this.archiving = false
+  },
+  async logout () {
+    delete store.token
+    await delay(1000)
+    window.location.href = process.env.RINGCENTRAL_REDIRECT_URI
   }
 })
-// store.$.subscribe(console.log)
 
 const fetchGroups = async () => {
-  const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250, type: 'Team' } })
-  store.groups = r.data.records
+  try {
+    const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250, type: 'Team' } })
+    store.groups = r.data.records
+  } catch (e) {
+    console.log(e.message)
+    if (e.data && e.data.error_description && e.data.error_description.includes('Token not found')) {
+      delete store.token
+    } else {
+      throw e
+    }
+  }
 }
 if (store.token) {
   rc.token(store.token)
@@ -41,7 +54,7 @@ rc.on('tokenChanged', newToken => {
   }
 })
 SubX.autoRun(store, () => {
-  Cookies.set('glip-archiver', { token: store.token }, { expires: 3650 })
+  window.localStorage.setItem('glip-archiver', JSON.stringify({ token: store.token }))
 })
 
 export default store
