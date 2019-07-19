@@ -9,13 +9,17 @@ import rc from './ringcentral'
 const redirectUri = process.env.RINGCENTRAL_REDIRECT_URI
 
 class Hello extends Component {
-  handleFiles () {
+  handleFiles (store) {
     const element = document.getElementById('the-file')
     const file = element.files[0]
     const fileReader = new window.FileReader()
     fileReader.onload = event => {
       const text = event.target.result
-      console.log(text)
+      try {
+        store.jsonFile = JSON.parse(text)
+      } catch (e) {
+        // todo: show error message
+      }
     }
     fileReader.readAsText(file)
   }
@@ -35,12 +39,18 @@ class Hello extends Component {
         {store.archiving ? <Spin size='large' /> : ''}
       </>
     }
+    let messageDisplay = ''
+    if (store.jsonFile) {
+      messageDisplay = <ul>{(store.jsonFile.posts || []).map(post => <li key={post.id}>{post.text}</li>)}</ul>
+    }
     return <>
       <h1>Glip Archiver - Beta</h1>
       <h2>Archive your Glip data</h2>
       {archiveBody}
       <h2>Read archived data</h2>
-      <input type='file' id='the-file' onChange={e => { this.handleFiles() }} />
+      <input type='file' id='the-file' onChange={e => { this.handleFiles(store) }} />
+      <br /><br />
+      {messageDisplay}
     </>
   }
 }
