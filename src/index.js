@@ -46,7 +46,10 @@ class Hello extends Component {
         const person = personsDict[post.creatorId] || { firstName: '[Unknown', lastName: 'User]' }
         console.log(post.creatorId)
         console.log(person)
-        return <li key={post.id}>{person.firstName} {person.lastName}: {post.text}</li>
+        return <li key={post.id}>{person.firstName} {person.lastName}: {post.text ? post.text.replace(/!\[:Person\]\((.+?)\)/g, (match, capture) => {
+          const p = personsDict[capture] || { firstName: '[Unknown', lastName: 'User]' }
+          return `@${p.firstName} ${p.lastName}`
+        }) : ''}</li>
       })}</ul>
     }
     return <>
