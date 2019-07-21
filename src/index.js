@@ -43,10 +43,10 @@ class Hello extends Component {
     if (store.jsonFile) {
       const personsDict = Object.assign(...store.jsonFile.persons.map(person => ({ [person.id]: person })))
       messageDisplay = <ul>{(store.jsonFile.posts || []).map(post => {
-        const person = personsDict[post.creatorId]
+        const person = personsDict[post.creatorId] || { firstName: '[Unknown', lastName: 'User]' }
         console.log(post.creatorId)
         console.log(person)
-        return <li key={post.id}>{person.FirstName} {person.lastName}: {post.text}</li>
+        return <li key={post.id}>{person.firstName} {person.lastName}: {post.text}</li>
       })}</ul>
     }
     return <>

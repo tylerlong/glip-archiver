@@ -1,5 +1,6 @@
 import SubX from 'subx'
 import delay from 'timeout-as-promise'
+import * as R from 'ramda'
 
 import rc, { fetchGroup, fetchPersons } from './ringcentral'
 import { fetchPosts, download, generateHash } from './util'
@@ -9,13 +10,12 @@ const store = SubX.create({
   async archive (groupId) {
     console.log(groupId)
     this.archiving = true
-
     const group = await fetchGroup(groupId)
     console.log(group)
-    const persons = await fetchPersons(group.members)
-    console.log(persons)
     const posts = await fetchPosts(rc, groupId)
     console.log(posts)
+    const persons = await fetchPersons(R.uniq([...group.members, ...posts.map(p => p.creatorId)]))
+    console.log(persons)
     const timestamp = (new Date()).getTime()
     const content = { timestamp, group, persons, posts }
     content.hash = generateHash(JSON.stringify(content) + process.env.HASH_SALT)
@@ -32,6 +32,7 @@ const store = SubX.create({
 const fetchGroups = async () => {
   try {
     const r = await rc.get('/restapi/v1.0/glip/groups', { params: { recordCount: 250, type: 'Team' } })
+    // console.log((await rc.get('/restapi/v1.0/glip/persons/glip-4517666819')).text)
     store.groups = r.data.records
   } catch (e) {
     console.log(e.message)
