@@ -41,7 +41,13 @@ class Hello extends Component {
     }
     let messageDisplay = ''
     if (store.jsonFile) {
-      messageDisplay = <ul>{(store.jsonFile.posts || []).map(post => <li key={post.id}>{post.text}</li>)}</ul>
+      const personsDict = Object.assign(...store.jsonFile.persons.map(person => ({ [person.id]: person })))
+      messageDisplay = <ul>{(store.jsonFile.posts || []).map(post => {
+        const person = personsDict[post.creatorId]
+        console.log(post.creatorId)
+        console.log(person)
+        return <li key={post.id}>{person.FirstName} {person.lastName}: {post.text}</li>
+      })}</ul>
     }
     return <>
       <h1>Glip Archiver - Beta</h1>
