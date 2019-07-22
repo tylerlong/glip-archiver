@@ -8,12 +8,12 @@ import { fetchPosts, generateHash } from './util'
 
 const store = SubX.create({
   ...JSON.parse(window.localStorage.getItem('glip-archiver')),
-  async archive (groupId) {
+  async archive (groupId, limit = 1000) {
     console.log(groupId)
     this.archiving = true
     const group = await fetchGroup(groupId)
     console.log(group)
-    const posts = await fetchPosts(rc, groupId)
+    const posts = await fetchPosts(rc, groupId, undefined, limit)
     console.log(posts)
     const persons = await fetchPersons(R.uniq([...group.members, ...posts.map(p => p.creatorId)]).filter(id => !R.isNil(id) && !R.isEmpty(id)))
     console.log(persons)

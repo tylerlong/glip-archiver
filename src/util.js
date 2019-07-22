@@ -1,9 +1,12 @@
-export const fetchPosts = async (rc, groupId, pageToken = undefined) => {
+export const fetchPosts = async (rc, groupId, pageToken = undefined, limit = 1000) => {
+  if (limit === 0) {
+    return []
+  }
   const r = await rc.get(`/restapi/v1.0/glip/chats/${groupId}/posts`, { params: { recordCount: 250, pageToken } })
   const records = r.data.records
   console.log(r.data)
   if (r.data.navigation && r.data.navigation.prevPageToken) {
-    return [...records, ...(await fetchPosts(rc, groupId, r.data.navigation.prevPageToken))]
+    return [...records, ...(await fetchPosts(rc, groupId, r.data.navigation.prevPageToken, limit - 250))]
   } else {
     return records
   }

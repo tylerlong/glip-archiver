@@ -10,6 +10,7 @@ const redirectUri = process.env.RINGCENTRAL_REDIRECT_URI
 
 class Hello extends Component {
   handleFiles (store) {
+    store.uploading = true
     const element = document.getElementById('the-file')
     const file = element.files[0]
     const fileReader = new window.FileReader()
@@ -17,6 +18,7 @@ class Hello extends Component {
       const text = event.target.result
       try {
         store.jsonFile = JSON.parse(text)
+        store.uploading = false
       } catch (e) {
         // todo: show error message
       }
@@ -35,7 +37,13 @@ class Hello extends Component {
         <br /><br />
         <select id='group-select'>{(store.groups || []).map(group => <option value={group.id} key={group.id}>{group.name || group.id}</option>)}</select>
         <br /> <br />
-        {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value)}>Click here to archive</Button> : ''}
+        <select id='records-limit-select'>
+          <option value='500'>Last 500 records</option>
+          <option value='1000'>Last 1000 records</option>
+          <option value='3000'>Last 3000 records</option>
+        </select>
+        <br /><br />
+        {(!store.archiving && (store.groups || []).length > 0) ? <Button type='primary' onClick={e => store.archive(document.getElementById('group-select').value, parseInt(document.getElementById('records-limit-select').value))}>Click here to archive</Button> : ''}
         {store.archiving ? <Spin size='large' /> : ''}
       </>
     }
@@ -44,8 +52,6 @@ class Hello extends Component {
       const personsDict = Object.assign(...store.jsonFile.persons.map(person => ({ [person.id]: person })))
       messageDisplay = <ul>{(store.jsonFile.posts || []).map(post => {
         const person = personsDict[post.creatorId] || { firstName: '[Unknown', lastName: 'User]' }
-        console.log(post.creatorId)
-        console.log(person)
         return <li key={post.id}>{person.firstName} {person.lastName}: {post.text ? post.text.replace(/!\[:Person\]\((.+?)\)/g, (match, capture) => {
           const p = personsDict[capture] || { firstName: '[Unknown', lastName: 'User]' }
           return `@${p.firstName} ${p.lastName}`
@@ -61,6 +67,7 @@ class Hello extends Component {
         <Tabs.TabPane tab='Read archived data' key='2'>
           <input type='file' id='the-file' onChange={e => { this.handleFiles(store) }} />
           <br /><br />
+          {store.uploading ? <Spin size='large' /> : ''}
           {messageDisplay}
         </Tabs.TabPane>
       </Tabs>
