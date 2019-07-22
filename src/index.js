@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Component } from 'react-subx'
-import { Button, Spin } from 'antd'
+import { Button, Spin, Tabs } from 'antd'
 
 import store from './store'
 import rc from './ringcentral'
@@ -54,12 +54,16 @@ class Hello extends Component {
     }
     return <>
       <h1>Glip Archiver - Beta</h1>
-      <h2>Archive your Glip data</h2>
-      {archiveBody}
-      <h2>Read archived data</h2>
-      <input type='file' id='the-file' onChange={e => { this.handleFiles(store) }} />
-      <br /><br />
-      {messageDisplay}
+      <Tabs defaultActiveKey='1'>
+        <Tabs.TabPane tab='Archive your Glip data' key='1'>
+          {archiveBody}
+        </Tabs.TabPane>
+        <Tabs.TabPane tab='Read archived data' key='2'>
+          <input type='file' id='the-file' onChange={e => { this.handleFiles(store) }} />
+          <br /><br />
+          {messageDisplay}
+        </Tabs.TabPane>
+      </Tabs>
     </>
   }
 }

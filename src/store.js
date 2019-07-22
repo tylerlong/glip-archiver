@@ -1,9 +1,10 @@
 import SubX from 'subx'
 import delay from 'timeout-as-promise'
 import * as R from 'ramda'
+import FileSaver from 'file-saver'
 
 import rc, { fetchGroup, fetchPersons } from './ringcentral'
-import { fetchPosts, download, generateHash } from './util'
+import { fetchPosts, generateHash } from './util'
 
 const store = SubX.create({
   ...JSON.parse(window.localStorage.getItem('glip-archiver')),
@@ -14,12 +15,12 @@ const store = SubX.create({
     console.log(group)
     const posts = await fetchPosts(rc, groupId)
     console.log(posts)
-    const persons = await fetchPersons(R.uniq([...group.members, ...posts.map(p => p.creatorId)]))
+    const persons = await fetchPersons(R.uniq([...group.members, ...posts.map(p => p.creatorId)]).filter(id => !R.isNil(id) && !R.isEmpty(id)))
     console.log(persons)
     const timestamp = (new Date()).getTime()
     const content = { timestamp, group, persons, posts }
     content.hash = generateHash(JSON.stringify(content) + process.env.HASH_SALT)
-    download(`glip-archive-${groupId}-${timestamp}.json`, JSON.stringify(content))
+    FileSaver.saveAs(new window.File([JSON.stringify(content)], `glip-archive-${groupId}-${timestamp}.json`, { type: 'text/plain;charset=utf-8' }))
     this.archiving = false
   },
   async logout () {
