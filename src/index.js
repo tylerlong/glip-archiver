@@ -52,7 +52,7 @@ class Hello extends Component {
       const personsDict = Object.assign(...store.jsonFile.persons.map(person => ({ [person.id]: person })))
       messageDisplay = <ul>{(store.jsonFile.posts || []).map(post => {
         const person = personsDict[post.creatorId] || { firstName: '[Unknown', lastName: 'User]' }
-        return <li key={post.id}>{person.firstName} {person.lastName}: {post.text ? post.text.replace(/!\[:Person\]\((.+?)\)/g, (match, capture) => {
+        return <li key={post.id}>{person.firstName} {person.lastName}({post.creationTime}): {post.text ? post.text.replace(/!\[:Person\]\((.+?)\)/g, (match, capture) => {
           const p = personsDict[capture] || { firstName: '[Unknown', lastName: 'User]' }
           return `@${p.firstName} ${p.lastName}`
         }) : ''}</li>
@@ -64,7 +64,7 @@ class Hello extends Component {
         <Tabs.TabPane tab='Archive your Glip data' key='1'>
           {archiveBody}
         </Tabs.TabPane>
-        <Tabs.TabPane tab='Read archived data' key='2'>
+        <Tabs.TabPane tab='Display archived data' key='2'>
           <input type='file' id='the-file' onChange={e => { this.handleFiles(store) }} />
           <br /><br />
           {store.uploading ? <Spin size='large' /> : ''}
